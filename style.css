@@ -1,0 +1,22 @@
+
+/* Set Selectors for Labeling a Diverse Range of UV Low 0 - 2 Green
+Moderate 3 - 5 Yellow
+High 6-7 Orange
+Very High 8-10 Red */
+
+.green {
+    background-color:green;
+}
+
+.yellow {
+    background-color:yellow;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.red {
+    background-color: red;
+}
+
