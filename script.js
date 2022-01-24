@@ -6,6 +6,7 @@ var currentTempEl = document.getElementById("temp");
 var currentWindEl = document.getElementById("wind");
 var currentHumidityEl = document.getElementById("humidity");
 var currentUVEl = document.getElementById("UVindex");
+var forecastCards = document.getElementById("forecast-cards");
 
 //Set API Key
 var APIKey = "3cc44ada90359f6c6afd5b1ee99eaa7d";
@@ -13,7 +14,6 @@ var APIKey = "3cc44ada90359f6c6afd5b1ee99eaa7d";
 //Link to Retrieve the Weather Data from the Open Weather API
 function getWeather(cityName) {
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
-    
     //Return GetWeather Function as a Promise
     return fetch(queryURL)
     .then(function(response) {
@@ -25,7 +25,6 @@ function getWeather(cityName) {
 //Link to Retrieve the UVI Data from the One Call API
 function UVQuery(lat, lon) {
     var UVqueryURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIKey}`;
-
     return fetch(UVqueryURL)
     .then(function(response) {
         return response.json();
@@ -56,10 +55,8 @@ searchEl.addEventListener('click', function(event) {
     currentHumidityEl.innerHTML = "Humidity: " + data.main.humidity + " %";
 
 //Call UVQuery function to Retrieve the UV data from the One Call API 
-    return UVQuery(data.coord.lat, data.coord.lon)
+    return UVQuery(data.coord.lat, data.coord.lon);
    
-
-
 }).then(function(UVIdata){
     // UV Index Color (*remove color from UV Index by creating a span for the UV value) 
     // Low 0 - 2 Green
@@ -67,23 +64,75 @@ searchEl.addEventListener('click', function(event) {
     // High 6-7 Orange
     // Very High 8-10 Red
     var currentUVI = UVIdata.current.uvi;
-    currentUVEl.innerHTML = "UV Index: " + currentUVI;
+    var uviValue = document.createElement("span");
+    uviValue.innerHTML = currentUVI;
+    currentUVEl.innerHTML = "UV Index: ";
+    currentUVEl.appendChild(uviValue);
+
 
 if(currentUVI < 3) {
-    currentUVEl.setAttribute('class', 'green')
+    uviValue.setAttribute('class', 'green')
 }
 if (currentUVI >= 3 && currentUVI <= 5) {
-    currentUVEl.setAttribute('class', 'yellow')
+    uviValue.setAttribute('class', 'yellow')
 }
 if (currentUVI >= 6 && currentUVI <= 7) {
-    currentUVEl.setAttribute('class', 'orange')
+    uviValue.setAttribute('class', 'orange')
 }
 if (currentUVI > 7) {
-    currentUVEl.setAttribute('class', 'red')
+    uviValue.setAttribute('class', 'red')
 }
+
+    
+var date1El = document.getElementById("date1");
+var icon1El = document.getElementById("icon1");
+var temp1El = document.getElementById("temp1");
+var wind1El = document.getElementById("wind1");
+var humidity1El = document.getElementById("humidity1");
+var day1date = UVIdata.daily[1].dt * 1000;
+var day1icon = UVIdata.daily[1].weather[0].icon;
+var day1Temp = UVIdata.daily[1].temp.day;
+var day1Wind = UVIdata.daily[1].wind_speed;
+var day1Humidity = UVIdata.daily[1].humidity;
+console.log(day1date);
+console.log(day1icon);
+console.log(day1Temp);
+console.log(day1Wind);
+console.log(day1Humidity);
+date1El.innerHTML = day1date;
+temp1El.innerHTML = "Temp: " + ktof(day1Temp).toFixed(2) + " &#176F" + "／" + ktoc(day1Temp).toFixed(2) + " &#176C";
+wind1El.innerHTML = "Wind: " + day1Wind + " MPH";
+humidity1El.innerHTML = "Humidity: " + day1Humidity + " %";
+icon1El.innerHTML = day1icon; //get the icon out!
+
 })
 ;
 
-
 })
 
+
+//function foreCast (date, icon, temp, humidity, wind){
+
+//   var forecastEls = document.querySelectorAll(".forecast");
+
+//    forecastEls[i].innerHTML = "";
+//    var forecastIndex = i*8 + 4;
+//    var forecastTempEl = document.createElement("p");
+//    forecastTempEl.innerHTML = "Temp: " + ktof(data.list[forecastIndex].main.temp) + " &#176F";
+    //currentTempEl.innerHTML = "Temp: " + ktof(data.main.temp).toFixed(2) + " &#176F" + "／" + ktoc(data.main.temp).toFixed(2) + " &#176C";
+//    forecastEls[i].appendChild(forecastTempEl);
+//return col;
+//}
+
+//var fiveDays = UVIdata.daily.slice(0, 5);
+
+
+//forecastCards.textContent = "";
+//for (let index = 0; index<fiveDays.length; index++){
+//    var nnn = fiveDays[index];
+//use moment to convert unix into human time
+
+//    var col = createWeatherCol(nnn.dt, '', forecast.temp.day);
+
+//    forecastCards.appendChild(col);
+//}
