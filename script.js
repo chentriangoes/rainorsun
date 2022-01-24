@@ -66,11 +66,6 @@ searchEl.addEventListener('click', function(event) {
     currentWindEl.innerHTML = "Wind: " + data.wind.speed + " MPH";
     currentHumidityEl.innerHTML = "Humidity: " + data.main.humidity + " %";
 
-
-    
-
-
-
 //Call UVQuery function to Retrieve the UV data from the One Call API 
     return UVQuery(data.coord.lat, data.coord.lon);
    
@@ -86,7 +81,6 @@ searchEl.addEventListener('click', function(event) {
     currentUVEl.innerHTML = "UV Index: ";
     currentUVEl.appendChild(uviValue);
 
-
 if (currentUVI < 3) {
     uviValue.setAttribute('class', 'green')
 }
@@ -100,32 +94,111 @@ if (currentUVI > 7) {
     uviValue.setAttribute('class', 'red')
 }
 
-// Day 1 data of the 5 days forecast    
+//5 Days Forecast
+// Day 1 Data
 var date1El = document.getElementById("date1");
 var icon1El = document.getElementById("icon1");
 var temp1El = document.getElementById("temp1");
 var wind1El = document.getElementById("wind1");
 var humidity1El = document.getElementById("humidity1");
 var day1date = new Date(UVIdata.daily[1].dt * 1000);
-var forecastDay = day1date.getDate();
-var forecastMonth = day1date.getMonth() + 1;
-var forecastYear = day1date.getFullYear();
+var forecastDay1 = day1date.getDate();
+var forecastMonth1 = day1date.getMonth() + 1;
+var forecastYear1 = day1date.getFullYear();
 var day1icon = UVIdata.daily[1].weather[0].icon;
 var day1Temp = UVIdata.daily[1].temp.day;
 var day1Wind = UVIdata.daily[1].wind_speed;
 var day1Humidity = UVIdata.daily[1].humidity;
 
-date1El.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
+date1El.innerHTML = forecastMonth1 + "/" + forecastDay1 + "/" + forecastYear1;
 icon1El.setAttribute("src", "http://openweathermap.org/img/w/" + day1icon + ".png")
 temp1El.innerHTML = "Temp: " + ktof(day1Temp).toFixed(2) + " &#176F" + "／" + ktoc(day1Temp).toFixed(2) + " &#176C";
 wind1El.innerHTML = "Wind: " + day1Wind + " MPH";
 humidity1El.innerHTML = "Humidity: " + day1Humidity + " %";
 
-        
+// Day 2 Data
+var date2El = document.getElementById("date2");
+var icon2El = document.getElementById("icon2");
+var temp2El = document.getElementById("temp2");
+var wind2El = document.getElementById("wind2");
+var humidity2El = document.getElementById("humidity2");
+var day2date = new Date(UVIdata.daily[2].dt * 1000);
+var forecastDay2 = day2date.getDate();
+var forecastMonth2 = day2date.getMonth() + 1;
+var forecastYear2 = day2date.getFullYear();
+var day2icon = UVIdata.daily[2].weather[0].icon;
+var day2Temp = UVIdata.daily[2].temp.day;
+var day2Wind = UVIdata.daily[2].wind_speed;
+var day2Humidity = UVIdata.daily[2].humidity;
 
+date2El.innerHTML = forecastMonth2 + "/" + forecastDay2 + "/" + forecastYear2;
+icon2El.setAttribute("src", "http://openweathermap.org/img/w/" + day2icon + ".png")
+temp2El.innerHTML = "Temp: " + ktof(day2Temp).toFixed(2) + " &#176F" + "／" + ktoc(day2Temp).toFixed(2) + " &#176C";
+wind2El.innerHTML = "Wind: " + day2Wind + " MPH";
+humidity2El.innerHTML = "Humidity: " + day2Humidity + " %";
 
+// Day 3 Data  
+var date3El = document.getElementById("date3");
+var icon3El = document.getElementById("icon3");
+var temp3El = document.getElementById("temp3");
+var wind3El = document.getElementById("wind3");
+var humidity3El = document.getElementById("humidity3");
+var day3date = new Date(UVIdata.daily[3].dt * 1000);
+var forecastDay3 = day3date.getDate();
+var forecastMonth3 = day3date.getMonth() + 1;
+var forecastYear3 = day3date.getFullYear();
+var day3icon = UVIdata.daily[3].weather[0].icon;
+var day3Temp = UVIdata.daily[3].temp.day;
+var day3Wind = UVIdata.daily[3].wind_speed;
+var day3Humidity = UVIdata.daily[3].humidity;
 
+date3El.innerHTML = forecastMonth3 + "/" + forecastDay3 + "/" + forecastYear3;
+icon3El.setAttribute("src", "http://openweathermap.org/img/w/" + day3icon + ".png")
+temp3El.innerHTML = "Temp: " + ktof(day3Temp).toFixed(2) + " &#176F" + "／" + ktoc(day3Temp).toFixed(2) + " &#176C";
+wind3El.innerHTML = "Wind: " + day3Wind + " MPH";
+humidity3El.innerHTML = "Humidity: " + day3Humidity + " %";
 
+// Day 4 Data 
+var date4El = document.getElementById("date4");
+var icon4El = document.getElementById("icon4");
+var temp4El = document.getElementById("temp4");
+var wind4El = document.getElementById("wind4");
+var humidity4El = document.getElementById("humidity4");
+var day4date = new Date(UVIdata.daily[4].dt * 1000);
+var forecastDay4 = day4date.getDate();
+var forecastMonth4 = day4date.getMonth() + 1;
+var forecastYear4 = day4date.getFullYear();
+var day4icon = UVIdata.daily[4].weather[0].icon;
+var day4Temp = UVIdata.daily[4].temp.day;
+var day4Wind = UVIdata.daily[4].wind_speed;
+var day4Humidity = UVIdata.daily[4].humidity;
+
+date4El.innerHTML = forecastMonth4 + "/" + forecastDay4 + "/" + forecastYear4;
+icon4El.setAttribute("src", "http://openweathermap.org/img/w/" + day4icon + ".png")
+temp4El.innerHTML = "Temp: " + ktof(day4Temp).toFixed(2) + " &#176F" + "／" + ktoc(day4Temp).toFixed(2) + " &#176C";
+wind4El.innerHTML = "Wind: " + day4Wind + " MPH";
+humidity4El.innerHTML = "Humidity: " + day4Humidity + " %";
+
+// Day 5 Data    
+var date5El = document.getElementById("date5");
+var icon5El = document.getElementById("icon5");
+var temp5El = document.getElementById("temp5");
+var wind5El = document.getElementById("wind5");
+var humidity5El = document.getElementById("humidity5");
+var day5date = new Date(UVIdata.daily[5].dt * 1000);
+var forecastDay5 = day5date.getDate();
+var forecastMonth5 = day5date.getMonth() + 1;
+var forecastYear5 = day5date.getFullYear();
+var day5icon = UVIdata.daily[5].weather[0].icon;
+var day5Temp = UVIdata.daily[5].temp.day;
+var day5Wind = UVIdata.daily[5].wind_speed;
+var day5Humidity = UVIdata.daily[5].humidity;
+
+date5El.innerHTML = forecastMonth5 + "/" + forecastDay5 + "/" + forecastYear5;
+icon5El.setAttribute("src", "http://openweathermap.org/img/w/" + day5icon + ".png")
+temp5El.innerHTML = "Temp: " + ktof(day5Temp).toFixed(2) + " &#176F" + "／" + ktoc(day5Temp).toFixed(2) + " &#176C";
+wind5El.innerHTML = "Wind: " + day5Wind + " MPH";
+humidity5El.innerHTML = "Humidity: " + day5Humidity + " %";
 });
 
 //Set Local Storage
@@ -162,30 +235,3 @@ humidity1El.innerHTML = "Humidity: " + day1Humidity + " %";
     };
 
 })
-
-
-//function foreCast (date, icon, temp, humidity, wind){
-
-//   var forecastEls = document.querySelectorAll(".forecast");
-
-//    forecastEls[i].innerHTML = "";
-//    var forecastIndex = i*8 + 4;
-//    var forecastTempEl = document.createElement("p");
-//    forecastTempEl.innerHTML = "Temp: " + ktof(data.list[forecastIndex].main.temp) + " &#176F";
-    //currentTempEl.innerHTML = "Temp: " + ktof(data.main.temp).toFixed(2) + " &#176F" + "／" + ktoc(data.main.temp).toFixed(2) + " &#176C";
-//    forecastEls[i].appendChild(forecastTempEl);
-//return col;
-//}
-
-//var fiveDays = UVIdata.daily.slice(0, 5);
-
-
-//forecastCards.textContent = "";
-//for (let index = 0; index<fiveDays.length; index++){
-//    var nnn = fiveDays[index];
-//use moment to convert unix into human time
-
-//    var col = createWeatherCol(nnn.dt, '', forecast.temp.day);
-
-//    forecastCards.appendChild(col);
-//}
