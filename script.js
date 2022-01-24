@@ -2,6 +2,7 @@
 var searchEl = document.getElementById("search-button");
 var inputEl = document.getElementById("city-input");
 var nameEl = document.getElementById("city-name");
+var currentPicEl = document.getElementById("current-pic");
 var currentTempEl = document.getElementById("temp");
 var currentWindEl = document.getElementById("wind");
 var currentHumidityEl = document.getElementById("humidity");
@@ -51,10 +52,24 @@ searchEl.addEventListener('click', function(event) {
     getWeather(cityName)
        .then(function(data) {
     console.log('data is', data);
-    nameEl.innerHTML = data.name // + (month/day/year) with format (1/23/2022);
+    var currentDate = new Date(data.dt*1000);
+    console.log(currentDate);
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth() + 1;
+    var year = currentDate.getFullYear();
+    nameEl.innerHTML = data.name + " (" + month + "/" + day + "/" + year + ") ";
+    var weatherPic = data.weather[0].icon;
+    console.log(weatherPic);
+    currentPicEl.setAttribute("src","http://openweathermap.org/img/w/" + weatherPic + ".png");
+    currentPicEl.setAttribute("alt", data.weather[0].description);
     currentTempEl.innerHTML = "Temp: " + ktof(data.main.temp).toFixed(2) + " &#176F" + "／" + ktoc(data.main.temp).toFixed(2) + " &#176C";
     currentWindEl.innerHTML = "Wind: " + data.wind.speed + " MPH";
     currentHumidityEl.innerHTML = "Humidity: " + data.main.humidity + " %";
+
+
+    
+
+
 
 //Call UVQuery function to Retrieve the UV data from the One Call API 
     return UVQuery(data.coord.lat, data.coord.lon);
@@ -72,7 +87,7 @@ searchEl.addEventListener('click', function(event) {
     currentUVEl.appendChild(uviValue);
 
 
-if(currentUVI < 3) {
+if (currentUVI < 3) {
     uviValue.setAttribute('class', 'green')
 }
 if (currentUVI >= 3 && currentUVI <= 5) {
@@ -91,23 +106,29 @@ var icon1El = document.getElementById("icon1");
 var temp1El = document.getElementById("temp1");
 var wind1El = document.getElementById("wind1");
 var humidity1El = document.getElementById("humidity1");
-var day1date = UVIdata.daily[1].dt * 1000;
+var day1date = new Date(UVIdata.daily[1].dt * 1000);
+var forecastDay = day1date.getDate();
+var forecastMonth = day1date.getMonth() + 1;
+var forecastYear = day1date.getFullYear();
 var day1icon = UVIdata.daily[1].weather[0].icon;
 var day1Temp = UVIdata.daily[1].temp.day;
 var day1Wind = UVIdata.daily[1].wind_speed;
 var day1Humidity = UVIdata.daily[1].humidity;
-console.log(day1date);
-console.log(day1icon);
-console.log(day1Temp);
-console.log(day1Wind);
-console.log(day1Humidity);
-date1El.innerHTML = day1date;
+
+date1El.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
+icon1El.setAttribute("src", "http://openweathermap.org/img/w/" + day1icon + ".png")
 temp1El.innerHTML = "Temp: " + ktof(day1Temp).toFixed(2) + " &#176F" + "／" + ktoc(day1Temp).toFixed(2) + " &#176C";
 wind1El.innerHTML = "Wind: " + day1Wind + " MPH";
 humidity1El.innerHTML = "Humidity: " + day1Humidity + " %";
-icon1El.innerHTML = day1icon; //get the icon out!
+
+        
+
+
+
+
 });
 
+//Set Local Storage
    var searchTerm = inputEl.value;
     getWeather(searchTerm);
     searchHistory.push(searchTerm);
