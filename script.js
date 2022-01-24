@@ -6,7 +6,9 @@ var currentTempEl = document.getElementById("temp");
 var currentWindEl = document.getElementById("wind");
 var currentHumidityEl = document.getElementById("humidity");
 var currentUVEl = document.getElementById("UVindex");
-var forecastCards = document.getElementById("forecast-cards");
+var historyEl = document.getElementById("history");
+var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+var clearEl = document.getElementById("clear-history");
 
 //Set API Key
 var APIKey = "3cc44ada90359f6c6afd5b1ee99eaa7d";
@@ -83,7 +85,7 @@ if (currentUVI > 7) {
     uviValue.setAttribute('class', 'red')
 }
 
-    
+// Day 1 data of the 5 days forecast    
 var date1El = document.getElementById("date1");
 var icon1El = document.getElementById("icon1");
 var temp1El = document.getElementById("temp1");
@@ -104,9 +106,39 @@ temp1El.innerHTML = "Temp: " + ktof(day1Temp).toFixed(2) + " &#176F" + "／" + k
 wind1El.innerHTML = "Wind: " + day1Wind + " MPH";
 humidity1El.innerHTML = "Humidity: " + day1Humidity + " %";
 icon1El.innerHTML = day1icon; //get the icon out!
+});
 
-})
-;
+   var searchTerm = inputEl.value;
+    getWeather(searchTerm);
+    searchHistory.push(searchTerm);
+    localStorage.setItem("search",JSON.stringify(searchHistory));
+    renderSearchHistory();
+
+    clearEl.addEventListener("click",function() {
+        searchHistory = [];
+        renderSearchHistory();
+    })
+
+    function renderSearchHistory() {
+        historyEl.innerHTML = "";
+        for (let i=0; i<searchHistory.length; i++) {
+            var historyItem = document.createElement("input");
+            // <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com"></input>
+            historyItem.setAttribute("type","text");
+            historyItem.setAttribute("readonly",true);
+            historyItem.setAttribute("class", "form-control d-block bg-white");
+            historyItem.setAttribute("value", searchHistory[i]);
+            historyItem.addEventListener("click",function() {
+                getWeather(historyItem.value);
+            })
+            historyEl.appendChild(historyItem);
+        }
+    };
+
+    renderSearchHistory();
+    if (searchHistory.length > 0) {
+        getWeather(searchHistory[searchHistory.length - 1]);
+    };
 
 })
 
