@@ -20,7 +20,6 @@ function getWeather(cityName) {
     //Return GetWeather Function as a Promise
     return fetch(queryURL)
     .then(function(response) {
-        console.log(response);
         return response.json();
     });
 }
@@ -51,15 +50,12 @@ searchEl.addEventListener('click', function(event) {
 //Get the Current Weather Data of the Targeted City
     getWeather(cityName)
        .then(function(data) {
-    console.log('data is', data);
     var currentDate = new Date(data.dt*1000);
-    console.log(currentDate);
     var day = currentDate.getDate();
     var month = currentDate.getMonth() + 1;
     var year = currentDate.getFullYear();
     nameEl.innerHTML = data.name + " (" + month + "/" + day + "/" + year + ") ";
     var weatherPic = data.weather[0].icon;
-    console.log(weatherPic);
     currentPicEl.setAttribute("src","http://openweathermap.org/img/w/" + weatherPic + ".png");
     currentPicEl.setAttribute("alt", data.weather[0].description);
     currentTempEl.innerHTML = "Temp: " + ktof(data.main.temp).toFixed(2) + " &#176F" + "／" + ktoc(data.main.temp).toFixed(2) + " &#176C";
